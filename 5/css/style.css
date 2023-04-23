@@ -1,0 +1,47 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-family: 'Roboto Mono', monospace;
+}
+.hero{
+    background-color: #F0F0F0;
+    color: #3C486B;
+    padding: 20px;
+    
+    position: relative;
+    text-align: center;
+}
+.hero h1{
+    font-family: 'Charmonman', cursive;
+}
+.name{
+    display: flex;
+    justify-content: space-evenly;
+}
+.Rcloud{
+    position: absolute;
+    right: 30%;
+}
+.Lcloud{
+    position: absolute;
+    left: 30%;
+}
+.dentist{
+    margin: auto auto 0;
+    width: 30%;
+}
+.mid{
+    text-align: center;
+    padding-bottom: 50px;
+}
+.mid img{
+    display: block;
+    margin: 0 auto 50px;
+    margin-top: 50px;
+    width: 200px;
+    height: auto;
+    border-radius:100% ;
+}

@@ -1,0 +1,47 @@
+h2{
+    font-family: 'Charmonman', cursive;
+    line-height: 1.5;
+    font-size: 3rem;
+    text-align: center;
+}
+h1{
+    font-weight: 800;
+    line-height: 1.5;
+    font-size: 3rem;
+    text-align: center;
+}
+body{
+    font-family: 'Roboto Mono', monospace;
+}
+.nav-item{
+    padding: 0 2rem;
+}
+html{
+    scroll-padding-top: 250px;
+    
+}
+.clients img{
+    border-radius: 50%;
+}
+.carousel-item img{
+    width: 100%;
+    height: 500px;
+    
+}
+.first{
+    width: 100%;
+    height: 60vh;
+    background-image: url("/imgs/2.png");
+    background-repeat: no-repeat;
+    background-color: white;
+    background-position-x: center;
+    background-size: contain;
+}
+.discount{
+    display: grid;
+    place-content: center;
+    height: 50vh;
+}
+.first h2{
+    
+}
