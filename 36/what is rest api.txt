@@ -1,0 +1,20 @@
+your api is a restful api 
+if you 
+___________________________________
+1. use http verbs (GET , POST , PUT , PATCH , DELETE)
+GET => Read
+POST => CREATE
+PUT , PATCH => UPDATE
+DELETE => DELETE
+
+PUT VS PATCH 
+_PUT updates the whole entire object
+_PATCH updates a piece of data
+___________________________________
+2. use specific pattern of Routes/EndPoints URLs
+GET => /articles  (fetch all articles) => /articles/jack (fetch jack article)
+POST => /article (create one new article)
+PUT , PATCH => /article/ahmed (updates ahmed article)
+DELETE => /articles (delete all the articles)  => /articles/ramy (delete ramys article)
+
+
