@@ -1,4 +1,0 @@
-npm i express
-npm i nodemon--save-dev
-npm run dev
-npm i body-parser
