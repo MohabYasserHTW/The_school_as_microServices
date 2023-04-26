@@ -1,6 +1,0 @@
-lvl 1 => Email+Password
-lvl 2 => Encryption with secret key and save secrete key on env
-lvl 3 => hashing cant be decrypted its oneway 
-lvl 4 => hash + salt (bcrypt)
-lvl 5 => cookies and sessions (passport)
-lvl 6 => third party Oauth (delegate your auth to bigger companies )
