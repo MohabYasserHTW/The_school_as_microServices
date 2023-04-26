@@ -1,0 +1,41 @@
+WEB 3,0
+
+
+Data+nonce= hash //if the hash start with 3 (0's) then its a valid block 
+nonce need to be changed until you get your 3 (0's)
+
+the more 0's the hash start with the more deficult block it is 
+
+then the data saved as hash that start with some 0's lets say 4 
+and once the data get modified the hash doesnt start with 4 0's anymore and when we get the data back we will know its not a valid data
+
+
+
+a block chain is a sequence of blocks that have been hashed depends on each other 
+
+block 1 (hash) => nonce+data 
+block 2 (hash) => nonce+dara+block 1 (hash)
+block 3 (hash) => nonce+data+block 2 (hash)
+
+if any data changed it affects the block 3 and block 3 hash will not start with zeros and now we know data has beed modified
+
+now saved data cant be changed its immutable
+
+
+
+
+
+it can be distrbuted chains
+
+
+if we have a chain that hashsed successfully we can make 2 copies of it and save it on distrbuted computers
+now we have 3 chains and they are all the same data then => hash for every chain will be the same 
+
+now let someone change the chain one it will broke its hash and no longer started with the same zeros 
+and let he also succeded  to solve this problem by changing its noce and fixed the hash problem  and returned it to start with zeros 
+
+but cause we have the other 2 chains we now can compare between the hashes and even if they all started with zeros but we will find that this hashes are different
+and now we know that the data has been modified
+
+
+now its more security to code your whole code not only your data and you can make your app do things automatically by hashing your code 
