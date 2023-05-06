@@ -70,7 +70,7 @@ const createPlace = async (req, res, next) => {
 
   let coordinates;
   try {
-    console.log(address)
+    
     coordinates = {
       lat: 40,
       lng:-70
@@ -90,7 +90,7 @@ const createPlace = async (req, res, next) => {
 
   let user;
   try {
-    console.log(creator,"aaaaaaaaaaaaaaaaaaaaaaaah")
+    
     user = await User.findById(creator);
     
   } catch (err) {
@@ -106,7 +106,7 @@ const createPlace = async (req, res, next) => {
     return next(error);
   }
 
-  console.log(user);
+  
 
   try {
     
@@ -115,13 +115,13 @@ const createPlace = async (req, res, next) => {
     sess.startTransaction();
     
     await createdPlace.save({ session: sess }); 
-    console.log("Hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
+    
     user.places.push(createdPlace); 
     
     await user.save({ session: sess }); 
     await sess.commitTransaction();
   } catch (err) {
-    console.log(err)
+    
     const error = new HttpError(
       'Creating place faileddddd, please try again.',
       500

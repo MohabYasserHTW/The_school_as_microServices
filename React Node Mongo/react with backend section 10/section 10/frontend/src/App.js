@@ -27,7 +27,7 @@ const App = () => {
     setUserId(uid);
     const tokenExpirationDate = expirationDate || new Date((new Date().getTime())+1000*60*60)
     setExpiration(tokenExpirationDate)
-    console.log(tokenExpirationDate)
+    
     localStorage.setItem("userData",JSON.stringify({
       userId: uid ,
       token :token,
@@ -45,7 +45,7 @@ const App = () => {
 
     if(token && expiration){
       const remainingTime = (expiration.getTime() - new Date().getTime)>2147483645? 2147483645:expiration.getTime() - new Date().getTime
-      console.log(expiration.getTime(),"ssssssssssss")
+      
       logoutTimer=setTimeout(logout,remainingTime)
     }else{
       clearTimeout(logoutTimer)
@@ -58,7 +58,7 @@ const App = () => {
     const storedData = JSON.parse(localStorage.getItem("userData"))
 
     if(storedData && storedData.token  && new Date(storedData.expirationDate) > new Date()){
-      console.log(storedData.expirationDate)
+      
       login(storedData.id , storedData.token , new Date(storedData.expirationDate))
     }
   },[login])
