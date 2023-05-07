@@ -1,7 +1,6 @@
 {
   "name": "mern-extra-project",
   "version": "1.0.0",
-  "description": "",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -12,11 +11,11 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^1.4.0",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
     "express": "^4.18.2",
-    "mongoose": "^7.1.0"
-  },
-  "devDependencies": {
+    "mongoose": "^7.1.0",
     "nodemon": "^2.0.22"
-  }
+  },
+  "description": ""
 }

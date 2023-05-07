@@ -10,7 +10,7 @@ app.use(bodyParser.json());
 app.use("/login",require("./routes/login"))
 app.use("/signup",require("./routes/signup"))
 app.use((req,res,next)=>{
-    console.log("can't find this route")
+    res.status(404).json({message: "couldn't find this route"})
 })
 
 

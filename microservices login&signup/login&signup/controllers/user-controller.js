@@ -1,5 +1,5 @@
 const User = require("../models/user-model")
-
+const bcrypt = require("bcryptjs")
 
 
 const loginUser = async (req,res,next)=>{
@@ -12,7 +12,8 @@ const loginUser = async (req,res,next)=>{
 
         return next(new Error("wrong user name or password"))
     }else{
-        if(user[0].password === password){
+        const compare = await bcrypt.compare(password,user[0].password)
+        if(compare){
     
             res.status(400).json({user/* :user.toObject({getters:true}) */})
         }
@@ -31,23 +32,16 @@ const signupUser = async (req,res,next)=>{
     const password = req.body.password
     const user = await User.find({userName})
     if(!user.length){
+        const hashedPw = await bcrypt.hash(password,12)
         const user = new User()
         user.userName = userName
-        user.password = password
+        user.password = hashedPw
 
         await user.save()
         
         res.status(201).json({message: "user created successfully "})
     }else{
         return next(new Error(" user name already exist"))
-        if(user.password === password){
-    
-            res.status(400).json({user/* :user.toObject({getters:true}) */})
-        }
-        else{
-    
-            return next(new Error("wrong user name or password"))
-        }
     }
 }
 
