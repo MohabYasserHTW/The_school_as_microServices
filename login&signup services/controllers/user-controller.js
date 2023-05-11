@@ -84,6 +84,21 @@ const signupUser = async (req,res,next)=>{
         return next(new HttpError(" user name already exist", 400))
     }
 
+    let verfied
+    if(userType === "ADMIN"){
+        try{
+            
+            verfied = jwt.verify(req.body.token,"SECRET861999")
+            
+            if(verfied.userType !== "SUPER_ADMIN"){
+                return next (new HttpError("only super admin can create admin",403))
+            }
+        }catch{
+            return next(new HttpError("invalid token",403))
+        }
+    }
+    
+
     const hashedPw = await bcrypt.hash(password,12)
     const user = new User()
     user.userName = userName
