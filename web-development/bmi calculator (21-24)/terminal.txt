@@ -1,0 +1,6 @@
+npm i express
+npm init //prepare the projet json file
+node server.js //to start the server
+npm i nodemon --save-dev nodemon // to install nodemon
+npm run dev // to run nodemon 
+npm i body-parser // to catch the data from req
