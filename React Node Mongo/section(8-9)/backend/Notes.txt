@@ -1,4 +1,0 @@
-use MCV when u building your server 
-Models 
-Controllers
-views (react)
