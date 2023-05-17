@@ -2,7 +2,7 @@ const { createQuestion, getQuestionById, getQuestions, updateQuestion, deleteAns
 const express = require("express")
 const router = express.Router()
 const {check,expressValidator} = require("express-validator")
-
+const verify = require("../middlewares/verify")
 
 
 
@@ -12,9 +12,9 @@ router.route("/question/:qId")
 .get(getQuestionById)
 */
 router.route("/:qId")
-.get(getQuestionById)
-.post(addAnswer)
-.delete(deleteAnswer)
+.get(verify,getQuestionById)
+.post(verify,addAnswer)
+.delete(verify,deleteAnswer)
  
 
 router.route("/")
@@ -29,9 +29,10 @@ router.route("/")
     check("answers").isLength({min:2}),
     check("correctAnswers").isLength({min:1}),
 ],
+verify,
     createQuestion)
-.get(getQuestions)
-.delete(deleteQuestion)
+.get(verify,getQuestions)
+.delete(verify,deleteQuestion)
 .patch(
     [check("name").not().isEmpty(),
     check("category").not().isEmpty(),
@@ -43,6 +44,7 @@ router.route("/")
     check("answers").isLength({min:2}),
     check("correctAnswers").isLength({min:1})
 ],
+verify,
 updateQuestion) 
 
 
