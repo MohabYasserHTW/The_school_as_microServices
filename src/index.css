@@ -184,6 +184,44 @@ ul {
   margin-left: 10px;
 }
 
+.pageBtns{
+  display: flex;
+  justify-content: center;
+}
+.pageBtns>button{
+  width: 5vw;
+  margin: 0 20px;
+}
+
+table{
+  margin: 0 auto;
+  border:2px solid black ;
+  width: 90vw;
+  height: 70vh;
+  padding: 2rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+}  
+table input[type=checkbox]{
+  width: 50px;
+  height: 50px;
+}
+table input{
+  width: 30vw;
+  margin: 0;
+}
+.deleteButton{
+  margin: 0;
+  background-color: red;
+  color: white;
+  width: 10vw;
+}
+.darkButton{
+  margin: 0;
+  background-color: darkslategrey;
+  color: white;
+  width: 20vw;
+}
 /* Scrollbar */
 ::-webkit-scrollbar {
   width: 10px;

@@ -15,6 +15,18 @@ function AddModal({toggleModal,type,qId,setRefresh}) {
         answers: [{name: "",description: ""},{name: "",description: ""}],
         correctAnswers:[]
     })
+    const [correctAnswersAsBoolean, setCorrectAnswersAsBoolean] = useState([])
+    const transferTheCorrectAnswersToBooleans = () =>{
+      question.answers.forEach( (answer, index) => {
+        if(question.correctAnswers.includes(answer._id)){
+          console.log(index)
+          setCorrectAnswersAsBoolean(prev => [...prev,true])
+        }else{
+          setCorrectAnswersAsBoolean(prev => [...prev,false])
+        }
+      })
+    }
+
     const method = type === "edit"? "PATCH" : "POST"
     
     useEffect(()=>{
@@ -29,6 +41,17 @@ function AddModal({toggleModal,type,qId,setRefresh}) {
                 }
               })
               .then(res=>{
+                const convertedCorrectAnswers =[]
+                res.data.answers.map((ans,ind) => {
+                    if(res.data.correctAnswers.includes(ans._id))
+                    {
+                        convertedCorrectAnswers.push(true)
+                    }else{
+                        console.log(ans._id)
+                        convertedCorrectAnswers.push(false)
+                    }
+                    
+                })
                 setQuestion({
                     name: res.data.name,
                     category: res.data.category,
@@ -36,9 +59,10 @@ function AddModal({toggleModal,type,qId,setRefresh}) {
                     mark: res.data.mark,
                     expectedTime: res.data.expectedTime,
                     answers: res.data.answers.map(ans => ans),
-                    correctAnswers:[]
+                    correctAnswers:/* convertedCorrectAnswers.map(ans => ans) */res.data.correctAnswers
                 })
-                console.log(res.data)
+                transferTheCorrectAnswersToBooleans()
+                console.log(question)
             }
               )
               .catch(err=>{
@@ -55,7 +79,6 @@ function AddModal({toggleModal,type,qId,setRefresh}) {
         setQuestion(prev => {
             const answers = prev.answers.filter((ans,index) => index !== ind )
             const correctAnswers = prev.correctAnswers.filter(ans => ans !== ind)
-            console.log(answers)
             return {...prev,answers: answers,correctAnswers: correctAnswers}
         })
         console.log(question)
@@ -75,55 +98,81 @@ function AddModal({toggleModal,type,qId,setRefresh}) {
         e.preventDefault()
         
         if((question.name && question.category && question.expectedTime && question.mark && question.subCategory && question.answers.length > 1 && question.correctAnswers.length > 0 && question.answers[0].name.length > 0 && question.answers[1].name.length > 0 )){
+            let newCorrectAnswers =[]
+            if(type === "edit"){
+                  
+                question.correctAnswers.forEach((answer1,ind) => answer1?newCorrectAnswers.push(ind):null)
+            }
+            
+            
             await axios({
                 method: method,
                 url: `http://localhost:5002/api/questions`,
                 data: {
                   ...question,
-                  questionId: qId
+                  questionId: qId,
+                  correctAnswers:type==="edit"?newCorrectAnswers:question.correctAnswers
                 },
                 headers:{
                     Authorization: `Bearer ${authContext.token}`
                 }
               })
               .then(()=>{
+                console.log("ssssssss")
                 setErr("succedded")
                 setRefresh(prev => prev+1)
+                console.log("ssssssss")
                 toggleModal()
             }
               )
               .catch(err=>{
                 console.log(err)
                 const message = err.response?.data?.message
-                setErr(message || "server not working")
+                setErr(message || "server not workingggg")
               })
         }
         
     }    
     
     const handeleChange = (e,ind) => {
-        
-        let {name, value, type, checked} = e.target
-        if(type === "checkbox")
+        console.log("A")
+        let {name, value, checked} = e.target
+        let compType = e.target.type
+        if(compType === "checkbox")
         {
-            if(checked){
-                const newCorrectAns = question.correctAnswers
-                newCorrectAns.push(ind)
-                setQuestion(prev => {
+            console.log("B")
+            if(type === "edit"){
+                console.log("C")
+                setQuestion(prev =>{
+                    const newCorrectAns = prev.correctAnswers.map((ans,index)=>index === ind ? !ans :ans)
                     return{
                         ...prev,
-                        correctAnswers: newCorrectAns
+                        correctAnswers:newCorrectAns
                     }
                 })
             }else{
-                const newCorrectAns = question.correctAnswers.filter(ans => ans !== ind)
-                setQuestion(prev => {
-                    return{
-                        ...prev,
-                        correctAnswers: newCorrectAns
-                    }
-                })
+                console.log("D")
+                if(checked){
+                    const newCorrectAns = question.correctAnswers
+                    newCorrectAns.push(ind)
+                    setQuestion(prev => {
+                        return{
+                            ...prev,
+                            correctAnswers: newCorrectAns
+                        }
+                    })
+                }else{
+                    const newCorrectAns = question.correctAnswers.filter(ans => ans !== ind)
+                    setQuestion(prev => {
+                        return{
+                            ...prev,
+                            correctAnswers: newCorrectAns
+                        }
+                    })
+                } 
             }
+            
+            
             
         }else{
             if(name === "mark" || name === "expectedTime"){
@@ -139,12 +188,13 @@ function AddModal({toggleModal,type,qId,setRefresh}) {
     }
 
     const handeleAnswerChange = (event,index) =>{
+        const {name} = event.target
         const newAns = question.answers.map((ans,ind) => {
             if(index !== ind)
             {
                 return ans
             }
-            return {...ans,name:event.target.value}
+            return {...ans,[name]:event.target.value}
         })
         
         setQuestion(prev =>({...prev,answers:newAns}))
@@ -170,28 +220,43 @@ function AddModal({toggleModal,type,qId,setRefresh}) {
 
             <input name='expectedTime' type='number' placeholder='expected time in seconds' onChange={(e)=>handeleChange(e)} value={question.expectedTime}/>
             <label className='warn'>{!question.expectedTime && "expectedTime is required"}</label>
-
+            <hr></hr>
+            <h2>Answers</h2>
             {question.answers.map((ans,index) => 
-            <div key={index} className='inputsAddmodal'>
+            <>
+                <div key={index} className='inputsAddmodal'>
+                    <input 
+                        name='name'
+                        type='text' 
+                        placeholder={`answer ${index+1}`} 
+                        value={question.answers[index].name} 
+                        onChange={(e)=>handeleAnswerChange(e,index)} 
+                    />
+                    
+                    {index > 1&&
+                        <button style={{backgroundColor:"red",color:"white",width:"30px",height:"30px",margin:"0",marginRight:"5px",borderRadius:"50%",padding:"0px"}} type='button' onClick={(event)=>deleteAnswer(event,index)}>➖</button>
+                    }
+                    <input 
+                        type='checkbox'
+                        className='checkbox'
+                        onChange={(e) =>handeleChange(e,index)}
+                        checked={type==="edit"?question.correctAnswers[index]:null}
+                    />
+                    
+                </div>
                 <input 
-                    type='text' 
-                    placeholder={`answer ${index+1}`} 
-                    value={question.answers[index].name} 
-                    onChange={(e)=>handeleAnswerChange(e,index)} 
+                name = "description"
+                type='text' 
+                placeholder={`description for ans no: ${index+1} [OPTIONAL]`} 
+                value={question.answers[index].description} 
+                onChange={(e)=>handeleAnswerChange(e,index)} 
                 />
-                {index > 1&&
-                    <button style={{backgroundColor:"red",color:"white",width:"30px",height:"30px",margin:"0",marginRight:"5px",borderRadius:"50%",padding:"0px"}} type='button' onClick={(event)=>deleteAnswer(event,index)}>➖</button>
-                }
-                <input 
-                    type='checkbox'
-                    className='checkbox'
-                    onChange={(e) =>handeleChange(e,index)}
-                />
-                
-            </div>
+            </>
+            
+            
             )}
             <label style={{color:"red"}}>{err}</label>
-            <button style={{backgroundColor:"darkslategrey",color:"white",width:"50px",height:"50px",margin:"0",borderRadius:"50%",padding:"0px"}} onClick={addAnswer}>➕</button>
+            <button style={{backgroundColor:"darkslategrey",color:"white",width:"50px",height:"50px",margin:"0",borderRadius:"50%",padding:"0px"}} onClick={addAnswer} type='button'>➕</button>
             
         </div>
         <div style={{backgroundColor:"white"}}>

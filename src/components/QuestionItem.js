@@ -2,6 +2,8 @@ import React, { useContext, useState, useEffect } from 'react'
 import axios from "axios"
 import { AuthContext } from '../context/auth-context'
 import AddModal from './AddModal'
+import QuestionPage from './Questions/QuestionPage'
+import { Link } from 'react-router-dom'
 
 
 function QuestionItem({question, setRefresh}) {
@@ -69,12 +71,15 @@ function QuestionItem({question, setRefresh}) {
 
   return (
     <li>
-        {openModal && <AddModal toggleModal={toggleModal} type={"edit"} qId={quest._id}/>}
+        {openModal && <AddModal toggleModal={toggleModal} type={"edit"} qId={quest._id} setRefresh={setRefresh}/>}
         {err && <p style={{color:"red"}}> {err} </p>}
         <div className='questionHeader'>
           <button onClick={()=>{handeleDelete(quest._id)}} style={{backgroundColor:"red", color: "white"}}>delete</button>
           {authContext.userId === question.createdBy &&
-          <button onClick={toggleModal} style={{backgroundColor:"darkslategrey", color: "white"}} >edit</button>
+          <Link to={"/question/"+question._id}>
+            <button onClick={toggleModal} style={{backgroundColor:"darkslategrey", color: "white",width:"10vw"}} >edit</button>
+          </Link>
+          
           }
           
         </div>
@@ -82,6 +87,7 @@ function QuestionItem({question, setRefresh}) {
         <h3>{quest.name}</h3>
         <h4>{quest.description}</h4>
         <ul className='answers'>{quest.answers.map(ans => <li key={ans.name}>{ans.name}</li>)}</ul>
+        
         <hr/>
     </li>
   )

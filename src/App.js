@@ -11,6 +11,7 @@ import UserProfile from './components/UserProfile';
 import { AuthContext } from './context/auth-context';
 import { useState } from 'react';
 import Questions from './components/Questions';
+import QuestionPage from './components/Questions/QuestionPage';
 
 
 function App() {
@@ -60,6 +61,7 @@ function App() {
         <Routes>
            <Route path='/' element={<Auth />} />
            <Route path='/userProfile' element={<UserProfile />} />
+           <Route path='/question/:qId' element={<QuestionPage />} />
            
         </Routes> 
       </BrowserRouter>

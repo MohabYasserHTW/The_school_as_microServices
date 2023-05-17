@@ -14,12 +14,27 @@ export default function Questions() {
   const [userId, setUserId] = useState(authContext.userId)
   const [category, setCategory] = useState(null)
   const [refresh, setRefresh] = useState(0)
+  const [page,setPage] = useState(1)
+  const [totalLength,setTotalLength] = useState(0)
+  const [loading, setLoading] = useState(false)
+  
 
   const toggleModal = () => {
     setOpenModal(prev=>!prev)
     setRefresh(prev => prev+1)
   }
 
+  const nextPage = () => {
+    if(page*5 < totalLength){
+      setPage(prev => prev+1)
+    }
+  }
+
+  const prevPage = () => {
+    if(page>1){
+      setPage(prev => prev-1)
+    }
+  }
 
   useEffect(() =>{
     if(!openModal){
@@ -27,7 +42,7 @@ export default function Questions() {
     }
   },[openModal])
 
-  //to be edited
+  
   useEffect(() =>{
 
     const getQuestions = async ()=>{
@@ -39,21 +54,30 @@ export default function Questions() {
       if(category){
         filters.category = category
       }
-
+      setLoading(true)
       await axios({
         method: "GET",
         url: "http://localhost:5002/api/questions",
-        params:{createdBy: authContext.userId, filters: filters},
+        params:{
+          createdBy: authContext.userId, 
+          filters: filters, 
+          pagination:{
+            skip:(page-1)*5, 
+            limit:5
+          }},
         headers:{
           Authorization: `Bearer ${authContext.token}`
         }
       })
       .then(res=>{
-        setQuestions(res.data)
-        console.log(res.data)
+        console.log(res.data.totalLength)
+        setQuestions(res.data.questions)
+        setTotalLength(res.data.totalLength)
+        
       })
       .catch(err=>{
-        const message = err.response.data.message
+        console.log(err)
+        const message = err?.response?.data?.message
         setErr(message || "server not working") 
         
       })
@@ -62,8 +86,11 @@ export default function Questions() {
     if(authContext.isLoggedIn){
       getQuestions()
     }
+
     
-  },[userId, category, refresh])
+
+    setLoading(false)
+  },[userId, category, refresh,page])
 
   return (<div >
     {openModal && <AddModal toggleModal={toggleModal} setRefresh={setRefresh}/>}
@@ -86,8 +113,17 @@ export default function Questions() {
           
     </div>
     {!authContext.isLoggedIn &&  <Navigate to="/" replace={true} />}
+    <hr/>
     <div className='questions_section'>
-      {questions? <QuestionsLists questions={questions} setRefresh={setRefresh}/>: "No questions"}
+      {loading? "Loading....":
+      questions?<QuestionsLists questions={questions} setRefresh={setRefresh}/>
+      :"No questions"
+      }
+      <div className='pageBtns'>
+        <button style={{backgroundColor:"darkslategray", color:"white"}} onClick={prevPage} > {"<"} </button>
+        <p style={{fontSize:"1.4rem"}}>{page}</p>
+        <button style={{backgroundColor:"darkslategray", color:"white"}} onClick={nextPage} > {">"} </button>
+      </div>
     </div>
     <p>{err}</p>
     </div>

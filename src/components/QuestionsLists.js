@@ -4,8 +4,7 @@ import QuestionItem from './QuestionItem'
 function QuestionsLists({questions, setRefresh}) {
   return (
     <ol>
-        <hr/>
-       {questions.map(question => <QuestionItem key={question.id} question={question} setRefresh={setRefresh}/>)} 
+       {questions.map(question => <QuestionItem key={question._id} question={question} setRefresh={setRefresh}/>)} 
     </ol>
   )
 }
