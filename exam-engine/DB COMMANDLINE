@@ -1,0 +1,27 @@
+ CREATE DATABASE exams;
+
+ CREATE TABLE examDefinition (
+ ID SERIAL PRIMARY KEY,
+ name VARCHAR(255),
+ passing_score INT DEFAULT 50,
+ Questions VARCHAR(255)[]
+ );
+
+ INSERT INTO examDefinition (name,passing_score,Questions)
+ VALUES ('firstExam',50,'{"1","2"}');
+
+ CREATE TABLE examInstance (
+ ID SERIAL PRIMARY KEY,
+ examDif INT references examDefinition(ID),
+ startedTime TIME DEFAULT NULL,
+ endTime TIME DEFAULT NULL,
+ duration INTERVAL DEFAULT '1 hours',
+ completionTime TIME GENERATED ALWAYS AS (startedTime + duration) STORED,
+ generatedLink jsonb,
+ createdBy VARCHAR(255),
+ takenBy VARCHAR(255),
+ qStatus VARCHAR(20) CHECK(qStatus IN ('absent','taken')),
+ Questions jsonb);
+
+INSERT INTO examInstance (examDif,generatedLink,createdBy,takenBy,qStatus,Questions)
+VALUES (1,'{"name": "Paint house", "tags": "Improvements", "finished": true}','mohab','ahmed','absent','[{"name":"hh"},{"name":"dd"}]');
