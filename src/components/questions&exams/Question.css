@@ -1,0 +1,21 @@
+.questions{
+    
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.question_card{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.view_question-btn{
+    padding: 1rem;
+    background-color: var(--DARK);
+    font: inherit;
+    border-radius: 25px;
+    border: none;
+    color: var(--LIGHT);
+}

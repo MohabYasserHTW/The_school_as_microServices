@@ -1,0 +1,21 @@
+.exams{
+    
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.exam_card{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.view_exam-btn{
+    padding: 1rem;
+    background-color: var(--DARK);
+    font: inherit;
+    border-radius: 25px;
+    border: none;
+    color: var(--LIGHT);
+}

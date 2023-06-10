@@ -1,0 +1,13 @@
+
+.card{
+    border: 1px solid black;
+    padding: 1rem;
+    border-radius: 25px;
+}
+.card:nth-child(even){
+    background-color: var(--LIGHT2);
+}
+.card:nth-child(odd){
+    
+    background-color: var(--LIGHT);
+}

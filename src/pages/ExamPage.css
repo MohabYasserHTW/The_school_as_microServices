@@ -1,0 +1,41 @@
+.exam_container{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    
+}
+.students_div{
+    display: flex;
+    justify-content: space-between;
+}
+.assignInputs{
+    display: flex;
+    flex-direction: column;
+    color: var(--DARK);
+    font-size: 1rem;
+}
+.assignInputs input[type=date]{
+    background-color: var(--LIGHT);
+    color: var(--DARK);
+    padding: 1rem;
+    width: 20vw;
+    border-radius: 25px;
+}
+.students_div button{
+    padding: 1rem;
+    background-color: var(--DARK);
+    color: var(--LIGHT);
+    font: inherit;
+    border-radius: 25px;
+    cursor: pointer;
+}
+.submit_btn{
+    background-color: var(--DARK);
+    color: var(--LIGHT);
+    font: inherit;
+    padding: 1rem;
+    width: 50vw;
+    border-radius: 25px;
+    margin: 1rem auto;
+    cursor: pointer;
+}

@@ -1,0 +1,29 @@
+:root{
+    --DARK: rgb(21,34,51) ;
+    --LIGHT: #FFF;
+    --LIGHT2: rgb(224,224,224);
+    --BIGFONT: font-size: clamp(1rem, 10vw, 2rem); 
+}
+
+.header{
+    background-color: var(--DARK);
+    color: var(--LIGHT);
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+nav ul{
+    padding: 2rem;
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding-left: 10vw;
+}
+a{
+    color: var(--LIGHT);
+    text-decoration: none;
+}
+a:hover{
+    color: var(--LIGHT2);
+}

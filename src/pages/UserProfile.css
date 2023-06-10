@@ -1,0 +1,30 @@
+.welcome_div option{
+    background-color: var(--LIGHT);
+    color: var(--DARK);
+}
+.welcome_div select{
+    margin-top: 4rem;
+    background-color: var(--DARK);
+    padding: 1rem;
+    border-radius:25px ;
+    font:inherit;
+    color: var(--LIGHT);
+}
+.user_profile_exams{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.create_btn{
+    margin-top: 4rem;
+    background-color: var(--LIGHT);
+    padding: 8px;
+    width: 100%;
+    border-radius:25px ;
+    border: none;
+    font:inherit;
+    color: var(--DARK);
+    font-size: 1.2rem;
+    font-weight: 800;
+    cursor: pointer;
+}

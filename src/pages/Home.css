@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Moonrocks&display=swap');
+section{
+    width: 100%;
+    padding: 5rem;
+}
+.container{
+    max-width: 1200px;
+    width: 80%;
+    margin: 0 auto;
+}
+section:nth-child(even){
+    background-color: var(--LIGHT);
+}
+section:nth-child(odd){
+ background-color: var(--LIGHT2)
+}
+section.hero{
+    background-color: var(--DARK);
+    color:var(--LIGHT);
+    text-shadow: 1px 1px 5px white;
+    font-size: clamp(.1rem, 2.5vw, 1.1rem); 
+    line-height: 3;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    display: flex;
+    flex-direction: row;
+}
+.hero>div{
+    display: flex;
+    flex-direction: row;
+}
+
+.welcome_div{
+    display: grid;
+    place-content: center;
+    text-align: center;
+    flex-grow: 1;
+    
+}
+.the_school{
+    border-left: 5px solid white;
+    display: grid;
+    place-content: center;
+    line-height: 1.5;
+    font-size: clamp(1rem, 2.5vw, 2rem); 
+    font-family: 'Rubik Moonrocks', cursive;
+    letter-spacing: 10px;
+    
+    flex-grow: 1;
+    
+}

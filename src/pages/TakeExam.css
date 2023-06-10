@@ -1,0 +1,13 @@
+.start_btn,.next_btn{
+    background-color: var(--DARK);
+    color: var(--LIGHT);
+    padding: 1rem;
+    font: inherit;
+    border-radius: 25px;
+    cursor: pointer;
+}
+.exam_div{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
